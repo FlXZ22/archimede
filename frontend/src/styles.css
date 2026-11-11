@@ -7,8 +7,9 @@
 :root {
   font-family: Manrope, Arial, sans-serif;
   color: #f7f7f8;
-  background: #b8b8b8;
+  background: #070707;
   font-synthesis: none;
+  --text: #f7f7f8;
   --surface: #070707;
   --panel: #151517;
   --line: #29292c;
@@ -23,7 +24,7 @@
 body {
   margin: 0;
   min-width: 320px;
-  background: linear-gradient(145deg, #d0d0d0, #777);
+  background: #070707;
   min-height: 100vh;
 }
 button,
@@ -133,18 +134,14 @@ button svg {
   display: block;
 }
 .frame {
-  max-width: 1480px;
-  width: calc(100% - 96px);
-  margin: 70px auto;
+  width: 100%;
+  margin: 0;
 }
 .dashboard {
   padding: 29px 38px 0;
-  border-radius: 35px;
-  background:
-    radial-gradient(ellipse 47% 60% at 66% 12%, #15191c, transparent 85%),
-    #070707;
-  box-shadow: 0 18px 60px #0002;
-  min-height: calc(100vh - 140px);
+  background: #070707;
+  min-height: 100vh;
+  min-height: 100svh;
   overflow: clip;
 }
 .topbar {
@@ -1071,14 +1068,8 @@ footer a:hover {
   display: inline-block;
   flex-shrink: 0;
 }
-.focus-frame {
-  max-width: 1100px;
-  margin: 35px auto;
-}
 .focus-frame .dashboard {
-  min-height: calc(100vh - 70px);
   padding-bottom: 35px;
-  background: #0a0a0c;
 }
 .focus-frame .topbar {
   border-bottom: 1px solid #222227;
@@ -1626,10 +1617,10 @@ footer a:hover {
   max-width: 700px;
   padding: 100px 30px;
   margin: auto;
-  color: #171719;
+  color: var(--text);
 }
 .boot .brand-symbol {
-  color: #171719;
+  color: var(--text);
 }
 .boot h1 {
   font-size: 26px;
@@ -1757,9 +1748,6 @@ math {
   display: none !important;
 }
 @media (min-width: 1600px) {
-  .frame {
-    margin: 90px auto;
-  }
   .dashboard {
     padding: 36px 45px 0;
   }
@@ -1794,13 +1782,8 @@ math {
   }
 }
 @media (max-width: 1100px) {
-  .frame {
-    width: calc(100% - 50px);
-    margin: 35px auto;
-  }
   .dashboard {
     padding: 24px 27px 0;
-    border-radius: 29px;
   }
   .topbar {
     gap: 20px;
@@ -1902,13 +1885,8 @@ math {
   }
 }
 @media (max-width: 800px) {
-  .frame {
-    width: calc(100% - 32px);
-    margin: 20px auto;
-  }
   .dashboard {
     padding: 22px 22px 0;
-    border-radius: 25px;
   }
   .topbar {
     flex-wrap: wrap;
@@ -2092,9 +2070,6 @@ math {
   }
   .focus-frame main {
     padding-top: 20px;
-  }
-  .focus-frame {
-    margin: 15px auto;
   }
   .question-heading h1 {
     font-size: 16px;
