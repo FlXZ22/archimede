@@ -1,0 +1,19 @@
+:root {
+  --font-family: 'Manrope Variable', Arial, sans-serif;
+  --canvas-light: #cecece;
+  --canvas-dark: #6f6f6f;
+  --surface: #070707;
+  --surface-glow: #101213;
+  --timeline: #18181a;
+  --line: #222224;
+  --control-line: #3d3d40;
+  --text: #f7f7f8;
+  --muted: #929295;
+  --cool: #627790;
+  --cool-light: #8fa5be;
+  --warm: #d68d01;
+  --warm-light: #ffc65a;
+  --low: #4b87f0;
+  --important: #35e4a0;
+  --high: #a64d9b;
+}

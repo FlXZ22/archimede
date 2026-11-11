@@ -1,0 +1,384 @@
+[
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2025/11/Archimede2025.zip",
+    "folder": "data/originals/Archimede2025",
+    "files": [
+      "0-archimede_biennio_2025_testo.pdf",
+      "1-archimede_triennio_2025_testo.pdf",
+      "2-soluzioni_biennio_2025.pdf",
+      "3-soluzioni_triennio_2025.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2024/11/Archimede2024.zip",
+    "folder": "data/originals/Archimede2024",
+    "files": [
+      "0-archimede_2024_biennio.pdf",
+      "1-archimede_2024_triennio.pdf",
+      "2-risposte_2024_biennio.pdf",
+      "3-risposte_2024_triennio.pdf",
+      "4-soluzioni_2024_biennio.pdf",
+      "5-soluzioni_2024_triennio.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2024/12/archimede2024rec.zip",
+    "folder": "data/originals/archimede2024rec",
+    "files": [
+      "0-archimede_2024_biennio_rec.pdf",
+      "1-archimede_2024_triennio_rec.pdf",
+      "2-archimede_biennio_rec_risposte.pdf",
+      "3-archimede_triennio_rec_risposte.pdf",
+      "4-soluzioni_2024_biennio_rec.pdf",
+      "5-soluzioni_2024_triennio_rec.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2023/12/Archimede2023.zip",
+    "folder": "data/originals/Archimede2023",
+    "files": [
+      "0-archimede_2023_biennio.pdf",
+      "1-archimede_2023_triennio.pdf",
+      "2-risposte_2023_biennio.pdf",
+      "3-risposte_2023_triennio.pdf",
+      "4-soluzioni_2023_biennio.pdf",
+      "5-soluzioni_2023_triennio.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2022/12/Archimede2022.zip",
+    "folder": "data/originals/Archimede2022",
+    "files": [
+      "0-archimede_biennio_2022.pdf",
+      "1-archimede_triennio_2022.pdf",
+      "2-biennio_2022_risposte.pdf",
+      "3-soluzioni_biennio_2022.pdf",
+      "4-soluzioni_triennio_2022.pdf",
+      "5-triennio_2022_risposte.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2021/12/giochi_archimede_2021.zip",
+    "folder": "data/originals/giochi_archimede_2021",
+    "files": [
+      "1-archimede_biennio_tradizionale.pdf",
+      "2-archimede_online_biennio.pdf",
+      "3-archimede_online_triennio.pdf",
+      "4-archimede_triennio_tradizionale.pdf",
+      "5-risposte_biennio_tradizionale.pdf",
+      "6-risposte_triennio_tradizionale.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2021/03/Archimede2020.zip",
+    "folder": "data/originals/Archimede2020",
+    "files": [
+      "1-archimede_riserva_biennio.pdf",
+      "2-archimede_riserva_triennio.pdf",
+      "3-risposte_archimede_biennio.pdf",
+      "4-risposte_archimede_triennio.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2019/11/archimede2019.zip",
+    "folder": "data/originals/archimede2019",
+    "files": [
+      "0-archimede_biennio_2019.pdf",
+      "1-archimede_biennio_2019_risp.pdf",
+      "2-archimede_triennio_2019.pdf",
+      "3-archimede_triennio_2019_risp.pdf",
+      "4-biennio_soluzioni_2019.pdf",
+      "5-triennio_soluzioni_2019.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2018/11/soluzioni_archimede2018.zip",
+    "folder": "data/originals/soluzioni_archimede2018",
+    "files": [
+      "0-archimede_biennio_2018.pdf",
+      "1-archimede_triennio_2018.pdf",
+      "2-archimede_biennio_2018_risp.pdf",
+      "3-archimede_triennio_2018_risp.pdf",
+      "4-triennio_soluzioni_2018.pdf",
+      "5-biennio_soluzioni_2018.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2017/11/soluzioni_archimede2017.zip",
+    "folder": "data/originals/soluzioni_archimede2017",
+    "files": [
+      "0-archimede_biennio_2017.pdf",
+      "2-._archimede_biennio_2017.pdf",
+      "3-archimede_biennio_2017_risp.pdf",
+      "4-._archimede_biennio_2017_risp.pdf",
+      "5-archimede_triennio_2017.pdf",
+      "6-._archimede_triennio_2017.pdf",
+      "7-archimede_triennio_2017_risp.pdf",
+      "8-._archimede_triennio_2017_risp.pdf",
+      "9-biennio_soluzioni_2017.pdf",
+      "10-._biennio_soluzioni_2017.pdf",
+      "11-triennio_soluzioni_2017.pdf",
+      "12-._triennio_soluzioni_2017.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2016/11/GiochiArchimede2016.zip",
+    "folder": "data/originals/GiochiArchimede2016",
+    "files": [
+      "1-archimede_biennio_2016.pdf",
+      "4-._archimede_biennio_2016.pdf",
+      "5-archimede_triennio_2016.pdf",
+      "6-._archimede_triennio_2016.pdf",
+      "7-risposte_biennio_2016.pdf",
+      "8-._risposte_biennio_2016.pdf",
+      "9-risposte_triennio_2016.pdf",
+      "10-._risposte_triennio_2016.pdf",
+      "11-soluzioni-biennio16.pdf",
+      "12-._soluzioni-biennio16.pdf",
+      "13-soluzioni-triennio16.pdf",
+      "14-._soluzioni-triennio16.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2015/12/GiochiArchimede-2015.zip",
+    "folder": "data/originals/GiochiArchimede-2015",
+    "files": [
+      "1-archimede_biennio_2015.pdf",
+      "4-._archimede_biennio_2015.pdf",
+      "5-archimede_triennio_2015.pdf",
+      "6-._archimede_triennio_2015.pdf",
+      "7-lettera2015.pdf",
+      "8-._lettera2015.pdf",
+      "9-soluzioni-biennio15.pdf",
+      "10-._soluzioni-biennio15.pdf",
+      "11-soluzioni-triennio15.pdf",
+      "12-._soluzioni-triennio15.pdf",
+      "13-tabella.pdf",
+      "14-._tabella.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2014/12/Giochi_Archimede_2014.zip",
+    "folder": "data/originals/Giochi_Archimede_2014",
+    "files": [
+      "6-griglie risposte corrette biennio.pdf",
+      "7-griglie risposte corrette triennio.pdf",
+      "8-soluzioni-biennio.pdf",
+      "9-soluzioni-triennio.pdf",
+      "11-lettera.pdf",
+      "12-tabella 4 testi.pdf",
+      "13-tabella.pdf",
+      "14-testo biennio 1.pdf",
+      "15-testo biennio 2.pdf",
+      "16-testo biennio 3.pdf",
+      "17-testo biennio 4.pdf",
+      "18-testo triennio 1.pdf",
+      "19-testo triennio 2.pdf",
+      "20-testo triennio 3.pdf",
+      "21-testo triennio 4.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2013/11/Archimede2013.zip",
+    "folder": "data/originals/Archimede2013",
+    "files": [
+      "0-soluzioni-biennio.pdf",
+      "2-._soluzioni-biennio.pdf",
+      "3-soluzioni-triennio.pdf",
+      "4-._soluzioni-triennio.pdf",
+      "5-testo-biennio-def.pdf",
+      "6-._testo-biennio-def.pdf",
+      "7-testo-triennio-def.pdf",
+      "8-._testo-triennio-def.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/04/Archimede2012.zip",
+    "folder": "data/originals/Archimede2012",
+    "files": [
+      "0-soluzioni-biennio.pdf",
+      "1-soluzioni-triennio.pdf",
+      "2-testo-biennio-def.pdf",
+      "3-testo-triennio-def.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2011.zip",
+    "folder": "data/originals/Archimede2011",
+    "files": [
+      "0-GiochiArchimede2011.pdf",
+      "1-soluzioni2011.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2010.zip",
+    "folder": "data/originals/Archimede2010",
+    "files": [
+      "0-soluzioni-biennio.pdf",
+      "1-soluzioni-triennio.pdf",
+      "2-GiochiArchimede2010.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2009.zip",
+    "folder": "data/originals/Archimede2009",
+    "files": [
+      "0-soluzioni-biennio.pdf",
+      "1-soluzioni-triennio.pdf",
+      "2-testo-biennio2.pdf",
+      "3-testo-triennio2.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2008.zip",
+    "folder": "data/originals/Archimede2008",
+    "files": [
+      "0-testo-triennio.pdf",
+      "1-soluzioni-biennio.pdf",
+      "2-soluzioni-triennio.pdf",
+      "3-testo-biennio.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2007.zip",
+    "folder": "data/originals/Archimede2007",
+    "files": [
+      "1-soluzioni_biennio-2007.pdf",
+      "4-._soluzioni_biennio-2007.pdf",
+      "5-soluzioni_triennio-2007.pdf",
+      "6-._soluzioni_triennio-2007.pdf",
+      "7-testo-biennio3.pdf",
+      "8-._testo-biennio3.pdf",
+      "9-testo-triennio3.pdf",
+      "10-._testo-triennio3.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2006.zip",
+    "folder": "data/originals/Archimede2006",
+    "files": [
+      "0-soluzioni_triennio-2006.pdf",
+      "1-testo-biennio3.pdf",
+      "2-testo-triennio3.pdf",
+      "3-soluzioni_biennio-2006.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2005.zip",
+    "folder": "data/originals/Archimede2005",
+    "files": [
+      "0-testo_biennio3.pdf",
+      "1-testo_triennio3.pdf",
+      "2-soluzioni_biennio.pdf",
+      "3-soluzioni_triennio.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2004.zip",
+    "folder": "data/originals/Archimede2004",
+    "files": [
+      "0-testo_biennio3.pdf",
+      "1-testo_triennio3.pdf",
+      "2-sobi.pdf",
+      "3-sotri.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2003.zip",
+    "folder": "data/originals/Archimede2003",
+    "files": [
+      "0-testibiennio2003.pdf",
+      "1-testitriennio2003.pdf",
+      "2-soluzionibiennio2003.pdf",
+      "3-soluzionitriennio2003.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2002.zip",
+    "folder": "data/originals/Archimede2002",
+    "files": [
+      "1-soluzionibiennio2002.pdf",
+      "2-soluzionitriennio2002.pdf",
+      "3-testibiennio2002.pdf",
+      "6-._testibiennio2002.pdf",
+      "7-testitriennio2002.pdf",
+      "8-._testitriennio2002.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2001.zip",
+    "folder": "data/originals/Archimede2001",
+    "files": [
+      "1-soluzionibiennio2001.pdf",
+      "2-soluzionitriennio2001.pdf",
+      "3-testibiennio2001.pdf",
+      "6-._testibiennio2001.pdf",
+      "7-testitriennio2001.pdf",
+      "8-._testitriennio2001.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede2000.zip",
+    "folder": "data/originals/Archimede2000",
+    "files": [
+      "1-soluzionibiennio2000.pdf",
+      "4-._soluzionibiennio2000.pdf",
+      "5-soluzionitriennio.pdf",
+      "6-._soluzionitriennio.pdf",
+      "7-testibiennio.pdf",
+      "8-._testibiennio.pdf",
+      "9-testitriennio2000.pdf",
+      "10-._testitriennio2000.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede1999.zip",
+    "folder": "data/originals/Archimede1999",
+    "files": [
+      "1-Soluzionibiennio1999.pdf",
+      "2-Soluzionitriennio1999.pdf",
+      "3-TestoBiennio1999.pdf",
+      "6-._TestoBiennio1999.pdf",
+      "7-TestoTriennio1999.pdf",
+      "8-._TestoTriennio1999.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede1998.zip",
+    "folder": "data/originals/Archimede1998",
+    "files": [
+      "5-gara-biennio1998.pdf",
+      "6-._gara-biennio1998.pdf",
+      "7-gara-triennio1998.pdf",
+      "8-._gara-triennio1998.pdf",
+      "9-soluzioni-biennio1998.pdf",
+      "10-soluzioni-triennio1998.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede1997.zip",
+    "folder": "data/originals/Archimede1997",
+    "files": [
+      "1- testo triennio1997.pdf",
+      "4-._ testo triennio1997.pdf",
+      "7-soluzioni-biennio1997.pdf",
+      "8-._soluzioni-biennio1997.pdf",
+      "9-soluzioni-triennio1997.pdf",
+      "10-._soluzioni-triennio1997.pdf",
+      "11-testo biennio1997.pdf",
+      "12-._testo biennio1997.pdf"
+    ]
+  },
+  {
+    "url": "https://olimpiadi.dm.unibo.it/wp-content/uploads/2012/10/Archimede1996.zip",
+    "folder": "data/originals/Archimede1996",
+    "files": [
+      "5-soluzioni biennio.pdf",
+      "6-soluzioni triennio.pdf",
+      "7-testo biennio.pdf",
+      "8-._testo biennio.pdf",
+      "9-testo triennio.pdf",
+      "10-._testo triennio.pdf"
+    ]
+  }
+]

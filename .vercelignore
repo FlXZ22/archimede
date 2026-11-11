@@ -1,0 +1,15 @@
+.git
+.venv
+target
+node_modules
+design-reference
+data/archimede.sqlite3*
+data/text
+data/*.png
+data/*.log
+frontend/public/assets
+frontend/public/data
+data/originals/*/archive.zip
+test-results
+tests
+.github

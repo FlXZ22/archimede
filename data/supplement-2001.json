@@ -1,0 +1,15 @@
+{
+  "question": "2001-gara-1-q13",
+  "reason": "The official PDF omits the answer options and its diagram extends above the question first line.",
+  "supplement_url": "https://www.istitutobruni.com/wp-content/uploads/2012/11/2001-Testo-e-Soluzioni-T.pdf",
+  "supplement_pdf": "data/originals/supplement-2001/bruni-2001.pdf",
+  "page": 2,
+  "options": {
+    "A": "2-sqrt(2)",
+    "B": "sqrt(3)-sqrt(2)",
+    "C": "1/sqrt(2)",
+    "D": "1",
+    "E": "(sqrt(2)+sqrt(3))/2"
+  },
+  "correct": "D"
+}

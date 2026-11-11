@@ -1,0 +1,17 @@
+{
+  "exams": 183,
+  "questions": 2632,
+  "years": 30,
+  "checks": [
+    "corpus completeness",
+    "answers hidden until grading",
+    "answer/note/flag persistence",
+    "server scoring",
+    "MathML",
+    "archive filters",
+    "mobile layout",
+    "mixed test",
+    "expiry and late-write rejection",
+    "no JS errors"
+  ]
+}
