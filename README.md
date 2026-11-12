@@ -53,7 +53,7 @@ Il grafico dell’andamento mostra l’accuratezza di ciascuna delle ultime otto
 
 183 prove e varianti, 2.632 quesiti nell’archivio 1996–2025 del [Progetto Olimpiadi della Matematica](https://olimpiadi.dm.unibo.it/le-gare/giochi-di-archimede/). I quesiti sono ritagli ad alta risoluzione dei PDF originali per conservare formule e figure. Un clic li ingrandisce. I promemoria utilizzano MathML.
 
-Raccolta, correzioni delle griglie e supplemento al quesito 13 del 2001 sono documentati in [docs/ARCHIVE.md](docs/ARCHIVE.md), `data/archive.json`, `data/downloads.json`, `data/key-audit-2015.json`, `data/cross-audit.json` e `data/supplement-2001.json`. Le risposte corrette non vengono incluse nelle API di inizio prova o catalogo. Le durate 2020/online 2021 non documentate sono tempi proposti per l’allenamento.
+Raccolta, correzioni delle griglie e supplemento al quesito 13 del 2001 sono documentati in [docs/ARCHIVE.md](docs/ARCHIVE.md), `data/archive.json`, `data/downloads.json`, `data/key-audit-2015.json`, `data/cross-audit.json` e `data/supplement-2001.json`. Le risposte corrette non vengono incluse nelle API di inizio prova o catalogo. Le durate storiche sono ora documentate per tutte le edizioni; vedi [le regole verificate](docs/REGOLE.md). Le prove complete usano tempi fissati all’edizione, mentre Mirato e Diagnosi sono allenamenti personalizzati.
 
 Il design deriva dal pacchetto `Focus_Dashboard_React_UI.zip` fornito dall’utente. Token, documento e componenti di riferimento sono in `design-reference/`. Il font Manrope è incluso con la sua licenza OFL in `frontend/public/brand/LICENSE.txt`. Le immagini decorative e i dati fittizi del pacchetto non vengono usati nell’app.
 
@@ -72,6 +72,7 @@ Per i test browser, con il server già avviato:
 ```bash
 npx playwright install chromium
 npm run test:e2e
+npm run test:rules
 ```
 
 `tests/browser.cjs` usa un contesto browser isolato: non modifica i progressi reali. Verifica diagnosi bilanciata, salvataggio/ripresa, timer, correzione Rust, diario degli errori, backup, classificazioni forti/deboli, allenamento adattivo, ripasso e layout da 320 a 1440 px. Gli screenshot e i report vengono scritti in `test-results/` (esclusa da Git). La CI ripete unit test, build e test browser.

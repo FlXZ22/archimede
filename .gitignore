@@ -21,3 +21,6 @@
 
 /data/originals/*/*-._*
 /data/*report*.json
+
+__pycache__/
+*.py[cod]

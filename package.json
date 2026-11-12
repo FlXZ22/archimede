@@ -12,7 +12,8 @@
     "test:e2e": "node tests/browser.cjs",
     "format": "prettier --write frontend/src scripts/build-public.mjs tests package.json vite.config.js vercel.json README.md && cargo fmt",
     "test:analytics": "node tests/analytics.cjs",
-    "test:runtime": "node tests/runtime.mjs"
+    "test:runtime": "node tests/runtime.mjs",
+    "test:rules": "node tests/official-rules.cjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.0",

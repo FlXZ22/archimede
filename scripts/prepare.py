@@ -179,10 +179,9 @@ for entry in json.loads((R/'data/downloads.json').read_text()):
      doc[pi].get_pixmap(matrix=fitz.Matrix(2.8,2.8),clip=tightened).save(dest)
      imgs.append('/assets/'+dest.name)
     qs.append({'id':f'{eid}-q{n}','number':n,'images':imgs,'text':qt,'topic':topic(qt),'correct':keys.get(n),'source_page':clips[0][0]+1 if clips else 1})
-   minutes=120
-   if re.search(r'100\s*minuti',text):minutes=100
-   elif re.search(r'90\s*minuti|1 ora e mezza|un.ora e mezza',text):minutes=90
-   elif year in [2020,2021]:minutes=60 if not online else 40
+   # Edition rules are resolved from instruction paragraphs by audit_rules.py.
+   # Do not infer durations from numbers appearing inside the question bodies.
+   minutes=0
    exams.append({'id':eid,'year':year,'variant':label,'kind':kind,'title':f'Archimede {year}'+(' · Recupero' if kind=='recupero' else ' · Online' if online else '')+f' · v{label}','minutes':minutes,'source_url':entry['url'],'pdf':'/'+str(test.relative_to(R)),'solution_pdf':'/'+str(sol.relative_to(R)) if sol else None,'questions':qs})
    print(eid,count,len(keys),flush=True)
 # A portrait PDF can contain several answer-grid columns: use explicit version
@@ -236,3 +235,5 @@ print('TOTAL',len(exams),sum(len(e['questions']) for e in exams),'ISSUES',issues
 
 import sys
 subprocess.run([sys.executable,str(R/"scripts/repair2001.py")],check=True)
+
+subprocess.run([sys.executable,str(R/"scripts/audit_rules.py")],check=True)

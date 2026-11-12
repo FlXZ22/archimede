@@ -69,7 +69,7 @@ export function saveState(state) {
     });
   return queue;
 }
-export function validateBackup(data, bank) {
+export function validateBackup(data, bank, exams = []) {
   if (
     data?.version !== 1 ||
     !data.profile ||
@@ -177,8 +177,22 @@ export function validateBackup(data, bank) {
           ["method", "calculation", "reading", "time", "uncertain"].includes(v),
       ),
     );
+    const edition = exams.find((e) => e.id === s.exam_id);
+    const faithful =
+      s.fidelity === "official" &&
+      edition &&
+      s.minutes === edition.rules?.minutes &&
+      review.length === edition.count &&
+      review.every((q) => q.id.startsWith(edition.id + "-q"));
     return {
       id: s.id,
+      exam_id: edition?.id || null,
+      fidelity: faithful ? "official" : "practice",
+      minutes:
+        Number.isInteger(s.minutes) && s.minutes >= 1 && s.minutes <= 180
+          ? s.minutes
+          : null,
+      rules: faithful ? edition.rules : null,
       title: s.title.slice(0, 120),
       started: s.started,
       finished: s.finished,

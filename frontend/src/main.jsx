@@ -310,6 +310,92 @@ function Modal({ title, children, onClose }) {
     </dialog>
   );
 }
+function RuleSummary({ exam }) {
+  const r = exam.rules;
+  return (
+    <div className="rule-summary">
+      <div className="rule-facts">
+        <span>
+          <strong>{r.minutes}</strong>minuti
+        </span>
+        <span>
+          <strong>{r.question_count}</strong>problemi
+        </span>
+        <span>
+          <strong>{r.question_count * r.scoring.correct}</strong>punti massimi
+        </span>
+      </div>
+      <p className="rule-scoring">
+        +{r.scoring.correct} corretta · +{r.scoring.blank} in bianco ·{" "}
+        {r.scoring.wrong} errata
+      </p>
+      <ul>
+        <li>Una sola risposta corretta fra A, B, C, D, E.</li>
+        {r.materials.map((t) => (
+          <li key={t}>{t}</li>
+        ))}
+        <li>
+          Il tempo continua anche se cambi scheda o chiudi la pagina; alla
+          scadenza vengono corrette le risposte salvate.
+        </li>
+      </ul>
+      <a
+        className="subtle-link"
+        href={encodeURI(r.source_href)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {r.source_label} ↗
+      </a>
+      {r.scoring_source_href !== r.source_href && (
+        <a
+          className="subtle-link scoring-source"
+          href={encodeURI(r.scoring_source_href)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Istruzioni cartacee della stessa edizione per il punteggio ↗
+        </a>
+      )}
+      <details className="method-details">
+        <summary>Adattamenti della simulazione digitale</summary>
+        <p>
+          Le selezioni sono una brutta copia: puoi rivederle prima della
+          consegna finale, che fissa la griglia. La griglia cartacea ufficiale
+          non ammette cancellature; questa app impedisce risposte multiple.
+        </p>
+        <p>
+          I promemoria di ripasso sono disponibili dopo la consegna. Durante la
+          prova lavora individualmente, senza consultare soluzioni. Non vengono
+          applicate le fasce orarie di accesso storiche né la raccolta cartacea
+          della griglia.
+        </p>
+        {r.notes.map((t) => (
+          <p key={t}>{t}</p>
+        ))}
+      </details>
+    </div>
+  );
+}
+function ExamRules({ exam, onClose, onStart, busy }) {
+  return (
+    <Modal title="Prima di iniziare" onClose={onClose}>
+      <p>{exam.title}</p>
+      <RuleSummary exam={exam} />
+      <p className="fine-print">
+        Il timer parte solo quando premi «Avvia simulazione».
+      </p>
+      <div className="modal-actions">
+        <Button kind="ghost" onClick={onClose}>
+          Torna alla scelta
+        </Button>
+        <Button onClick={onStart} disabled={busy}>
+          Avvia simulazione · {exam.rules.minutes} min <Icon name="arrow" />
+        </Button>
+      </div>
+    </Modal>
+  );
+}
 function App() {
   const [data, setData] = useState(null),
     [personal, setPersonal] = useState(initialState),
@@ -321,7 +407,8 @@ function App() {
     [saved, setSaved] = useState(true),
     [storageError, setStorageError] = useState(""),
     [resultId, setResultId] = useState(null),
-    [zoom, setZoom] = useState(null);
+    [zoom, setZoom] = useState(null),
+    [pendingStart, setPendingStart] = useState(null);
   const finishing = useRef(false),
     stateRef = useRef(personal);
   stateRef.current = personal;
@@ -368,7 +455,19 @@ function App() {
     setResultId(null);
     window.scrollTo(0, 0);
   }
-  async function start(config) {
+  function start(config) {
+    if (busy) return;
+    if (personal.active) {
+      navigate("quiz");
+      return;
+    }
+    if (config.exam_id) {
+      setPendingStart(config);
+      return;
+    }
+    begin(config);
+  }
+  async function begin(config) {
     if (busy) return;
     if (personal.active) {
       navigate("quiz");
@@ -421,6 +520,10 @@ function App() {
       const completed = {
         id: a.id,
         title: a.title,
+        exam_id: a.exam_id,
+        fidelity: a.fidelity,
+        minutes: a.minutes,
+        rules: a.rules,
         started: a.started,
         finished: Date.now(),
         notes: a.notes,
@@ -468,7 +571,11 @@ function App() {
     try {
       if (file.size > 20 * 1024 * 1024)
         throw Error("Il backup supera il limite di 20 MB.");
-      const imported = validateBackup(JSON.parse(await file.text()), data.bank);
+      const imported = validateBackup(
+        JSON.parse(await file.text()),
+        data.bank,
+        data.exams,
+      );
       setPersonal((p) => mergeBackup(p, imported));
       setMessage(
         `Backup importato: ${imported.sessions.length} prove, senza duplicati.`,
@@ -727,6 +834,18 @@ function App() {
         <div className="toast" role="status">
           {message}
         </div>
+      )}
+      {pendingStart && (
+        <ExamRules
+          exam={data.exams.find((e) => e.id === pendingStart.exam_id)}
+          busy={busy}
+          onClose={() => setPendingStart(null)}
+          onStart={() => {
+            const config = pendingStart;
+            setPendingStart(null);
+            begin(config);
+          }}
+        />
       )}
       {zoom && (
         <Modal title="Quesito originale" onClose={() => setZoom(null)}>
@@ -1049,8 +1168,16 @@ function Training({ data, stats, personal, onStart, onPlan, busy }) {
               </label>
             )}
             <label>
-              Minuti
+              {mode === "official"
+                ? "Durata della gara (minuti)"
+                : "Minuti di allenamento"}
               <input
+                aria-label={
+                  mode === "official"
+                    ? "Durata della gara"
+                    : "Minuti di allenamento"
+                }
+                readOnly={mode === "official"}
                 type="number"
                 min="1"
                 max="180"
@@ -1063,7 +1190,7 @@ function Training({ data, stats, personal, onStart, onPlan, busy }) {
             disabled={busy || minutes < 1 || minutes > 180}
             onClick={() =>
               mode === "official"
-                ? onStart({ exam_id: eid, minutes: +minutes })
+                ? onStart({ exam_id: eid })
                 : onPlan({
                     mode: mode === "diagnostic" ? "diagnostic" : "topic",
                     topic: mode === "target" ? topic : null,
@@ -1076,27 +1203,40 @@ function Training({ data, stats, personal, onStart, onPlan, busy }) {
                   })
             }
           >
-            Inizia {mode === "diagnostic" ? "la diagnosi" : "l’allenamento"}{" "}
+            Inizia{" "}
+            {mode === "diagnostic"
+              ? "la diagnosi"
+              : mode === "official"
+                ? "la simulazione"
+                : "l’allenamento"}{" "}
             <Icon name="arrow" />
           </Button>
           <p className="fine-print">
             5 punti corretta · 1 in bianco · 0 errata.
             <br />
-            Il timer continua anche se chiudi la pagina. I tempi delle prove
-            online storiche possono essere proposti per l’allenamento.
+            {mode === "official"
+              ? "Durata documentata dell’edizione, non modificabile in simulazione. Per scegliere il tempo usa Mirato o Diagnosi."
+              : "Tempo di allenamento personalizzato: non riproduce la durata di una gara ufficiale."}
           </p>
         </section>
-        <aside className="panel training-note">
-          <span className="big-mark">∑</span>
-          <h2>Prima il metodo.</h2>
-          <p>{TOPIC_GUIDES[topic].method}</p>
-          <Formula topic={topic} />
-          <p className="muted">{TOPIC_GUIDES[topic].check}</p>
-          <div className="rule-note">
-            Le ripetizioni ti aiutano a consolidare. Per misurare i tuoi punti
-            forti consideriamo solo il primo tentativo su ciascun problema.
-          </div>
-        </aside>
+        {mode === "official" ? (
+          <aside className="panel training-note">
+            <h2>Condizioni dell’edizione</h2>
+            <RuleSummary exam={data.exams.find((e) => e.id === eid)} />
+          </aside>
+        ) : (
+          <aside className="panel training-note">
+            <span className="big-mark">∑</span>
+            <h2>Prima il metodo.</h2>
+            <p>{TOPIC_GUIDES[topic].method}</p>
+            <Formula topic={topic} />
+            <p className="muted">{TOPIC_GUIDES[topic].check}</p>
+            <div className="rule-note">
+              Le ripetizioni ti aiutano a consolidare. Per misurare i tuoi punti
+              forti consideriamo solo il primo tentativo su ciascun problema.
+            </div>
+          </aside>
+        )}
       </div>
       {stats.queue.length > 0 && (
         <section className="panel review-schedule">
@@ -1304,6 +1444,11 @@ function Quiz({ attempt: a, update, finish, busy, saved, onZoom }) {
       <div className="quiz-toolbar">
         <div>
           <p>{a.title}</p>
+          <span className="fidelity-label">
+            {a.fidelity === "official"
+              ? `Simulazione · ${a.minutes} min documentati`
+              : "Allenamento personalizzato"}
+          </span>
           <span>
             {answered} / {a.questions.length} risposte
           </span>
@@ -1382,7 +1527,9 @@ function Quiz({ attempt: a, update, finish, busy, saved, onZoom }) {
         <span>A–E per rispondere · ← → per navigare</span>
       </div>
       <details className="scratch" key={q.id}>
-        <summary>Appunti personali</summary>
+        <summary>
+          {a.fidelity === "official" ? "Brutta copia" : "Appunti personali"}
+        </summary>
         <textarea
           aria-label="Appunti sul problema"
           placeholder="Un’idea, un passaggio o un dubbio…"
@@ -1504,7 +1651,10 @@ function Results({
           <p className="eyebrow">UN PASSO AVANTI</p>
           <h1>Ora, capiamo il perché.</h1>
           <p className="muted">
-            {s.title} · {fmtDate(s.finished)}
+            {s.title} · {fmtDate(s.finished)} ·{" "}
+            {s.fidelity === "official"
+              ? `Simulazione · ${s.minutes} min`
+              : "Allenamento"}
           </p>
         </div>
         <Button onClick={() => onNavigate("dashboard")}>

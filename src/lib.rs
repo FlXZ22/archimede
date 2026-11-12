@@ -49,6 +49,9 @@ fn db() -> &'static Mutex<Connection> {
         assert!(corpus.issues.is_empty(), "Unresolved corpus issues");
         let transaction = connection.unchecked_transaction().unwrap();
         for mut exam in corpus.exams {
+            let rule = exam_rules(&exam.id);
+            assert_eq!(u64::from(exam.minutes), rule["minutes"].as_u64().unwrap(), "Corpus duration differs from verified rules");
+            assert_eq!(exam.questions.len() as u64, rule["question_count"].as_u64().unwrap());
             for question in &mut exam.questions {
                 assert!(question.correct.as_deref().is_some_and(|answer| ["A", "B", "C", "D", "E"].contains(&answer)), "Invalid answer key");
                 question.topic = topic(question);
@@ -184,9 +187,21 @@ fn all_exams() -> Vec<Exam> {
 fn safe_question(q: &Question, e: &Exam) -> Value {
     json!({"id":q.id,"number":q.number,"images":q.images,"topic":q.topic,"key":key(q),"source_page":q.source_page,"pdf":e.pdf,"year":e.year,"source_title":e.title})
 }
+fn exam_rules(exam_id: &str) -> Value {
+    static RULES: OnceLock<HashMap<String, Value>> = OnceLock::new();
+    RULES
+        .get_or_init(|| {
+            let manifest: Value = serde_json::from_str(include_str!("../data/exam-rules.json"))
+                .expect("verified edition rules");
+            serde_json::from_value(manifest["exams"].clone()).expect("edition rule map")
+        })
+        .get(exam_id)
+        .expect("every archived edition needs sourced rules")
+        .clone()
+}
 fn catalog() -> Value {
     let es = all_exams();
-    let exams:Vec<Value>=es.iter().map(|e|json!({"id":e.id,"year":e.year,"variant":e.variant,"kind":e.kind,"title":e.title,"minutes":e.minutes,"count":e.questions.len(),"pdf":e.pdf})).collect();
+    let exams:Vec<Value>=es.iter().map(|e|json!({"id":e.id,"year":e.year,"variant":e.variant,"kind":e.kind,"title":e.title,"minutes":e.minutes,"count":e.questions.len(),"pdf":e.pdf,"rules":exam_rules(&e.id)})).collect();
     let bank:Vec<Value>=es.iter().flat_map(|e|e.questions.iter().map(|q|json!({"id":q.id,"key":key(q),"topic":q.topic,"year":e.year,"canonical":e.id.ends_with("-1")}))).collect();
     json!({"exams":exams,"bank":bank,"total":bank.len(),"topics":["Algebra","Geometria","Teoria dei numeri","Combinatoria","Probabilità","Logica"],"source":"https://olimpiadi.dm.unibo.it/le-gare/giochi-di-archimede/"})
 }
@@ -196,18 +211,36 @@ pub struct StartInput {
     pub question_ids: Option<Vec<String>>,
     pub minutes: Option<u32>,
     pub title: Option<String>,
+    pub practice: Option<bool>,
 }
 fn start(input: StartInput) -> Result<Value, String> {
+    let exam_id = input.exam_id.clone();
     let es = all_exams();
-    let (title, minutes, selected) = if let Some(eid) = input.exam_id {
+    let (title, minutes, selected, rules, fidelity) = if let Some(eid) = input.exam_id {
         let e = es.iter().find(|e| e.id == eid).ok_or("Prova non trovata")?;
+        let rules = exam_rules(&e.id);
+        let official_minutes = rules["minutes"].as_u64().unwrap() as u32;
+        let practice = input.practice.unwrap_or(false);
+        if !practice
+            && input
+                .minutes
+                .is_some_and(|minutes| minutes != official_minutes)
+        {
+            return Err(format!("Questa edizione prevede {official_minutes} minuti. Per un tempo diverso usa la modalità allenamento."));
+        }
         (
             e.title.clone(),
-            input.minutes.unwrap_or(e.minutes),
+            if practice {
+                input.minutes.unwrap_or(official_minutes)
+            } else {
+                official_minutes
+            },
             e.questions
                 .iter()
                 .map(|q| safe_question(q, e))
                 .collect::<Vec<_>>(),
+            rules,
+            if practice { "practice" } else { "official" },
         )
     } else {
         let ids = input.question_ids.ok_or("Scegli almeno un quesito")?;
@@ -235,6 +268,8 @@ fn start(input: StartInput) -> Result<Value, String> {
                 .collect(),
             input.minutes.unwrap_or(25),
             selected,
+            Value::Null,
+            "practice",
         )
     };
     if !(1..=180).contains(&minutes) {
@@ -242,7 +277,7 @@ fn start(input: StartInput) -> Result<Value, String> {
     }
     let started = now();
     Ok(
-        json!({"id":format!("{:032x}",rand::random::<u128>()),"title":title,"started":started,"deadline":started+u64::from(minutes)*60000,"minutes":minutes,"questions":selected,"answers":{},"notes":{},"times":{},"flags":[]}),
+        json!({"id":format!("{:032x}",rand::random::<u128>()),"title":title,"exam_id":exam_id,"started":started,"deadline":started+u64::from(minutes)*60000,"minutes":minutes,"rules":rules,"fidelity":fidelity,"questions":selected,"answers":{},"notes":{},"times":{},"flags":[]}),
     )
 }
 #[derive(Deserialize, Default)]
@@ -267,7 +302,7 @@ fn grade(input: GradeInput) -> Result<Value, String> {
     }
     let es = all_exams();
     let mut review = Vec::new();
-    let (mut correct, mut blank) = (0, 0);
+    let (mut correct, mut blank, mut score, mut maximum) = (0, 0, 0_u64, 0_u64);
     for id in input.question_ids {
         let (q, e) = es
             .iter()
@@ -280,6 +315,17 @@ fn grade(input: GradeInput) -> Result<Value, String> {
         } else if selected.is_none() {
             blank += 1
         };
+        let scoring = exam_rules(&e.id)["scoring"].clone();
+        maximum += scoring["correct"].as_u64().unwrap();
+        score += scoring[if ok {
+            "correct"
+        } else if selected.is_none() {
+            "blank"
+        } else {
+            "wrong"
+        }]
+        .as_u64()
+        .unwrap();
         let mut r = safe_question(q, e);
         r["selected"] = json!(selected);
         r["correct"] = json!(q.correct);
@@ -288,7 +334,7 @@ fn grade(input: GradeInput) -> Result<Value, String> {
         review.push(r);
     }
     Ok(
-        json!({"correct":correct,"blank":blank,"wrong":review.len()-correct-blank,"score":correct*5+blank,"max":review.len()*5,"review":review}),
+        json!({"correct":correct,"blank":blank,"wrong":review.len()-correct-blank,"score":score,"max":maximum,"review":review}),
     )
 }
 #[derive(Deserialize)]
@@ -331,7 +377,11 @@ mod tests {
         let c = catalog();
         assert_eq!(c["total"], 2632);
         assert_eq!(c["exams"].as_array().unwrap().len(), 183);
-        assert!(!c.to_string().contains("correct"));
+        assert!(c["bank"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|q| q.get("correct").is_none()));
     }
     #[test]
     fn start_and_grade_validated() {
@@ -341,7 +391,11 @@ mod tests {
         })
         .unwrap();
         assert_eq!(a["questions"].as_array().unwrap().len(), 16);
-        assert!(!a.to_string().contains("correct"));
+        assert!(a["questions"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|q| q.get("correct").is_none()));
         let ids: Vec<String> = vec![
             "2025-gara-1-q1".into(),
             "2025-gara-1-q2".into(),
@@ -392,5 +446,44 @@ mod tests {
         assert_ne!(key(&a), key(&b));
         b.text = "7. Sia x = 2 + 3. Quanto vale x? (A) 5".into();
         assert_eq!(key(&a), key(&b));
+    }
+    #[test]
+    fn official_durations_are_locked_and_practice_is_explicit() {
+        for (id, expected) in [
+            ("2004-gara-1", 90),
+            ("2009-gara-1", 120),
+            ("2016-gara-1", 110),
+            ("2019-gara-1", 110),
+            ("2021-online-1", 60),
+            ("2025-gara-1", 100),
+        ] {
+            let result = start(StartInput {
+                exam_id: Some(id.into()),
+                ..Default::default()
+            })
+            .unwrap();
+            assert_eq!(result["minutes"], expected);
+            assert_eq!(result["fidelity"], "official");
+            assert_eq!(
+                result["deadline"].as_u64().unwrap() - result["started"].as_u64().unwrap(),
+                expected * 60000
+            );
+            assert!(result["rules"]["duration_verified"].as_bool().unwrap());
+        }
+        assert!(start(StartInput {
+            exam_id: Some("2019-gara-1".into()),
+            minutes: Some(25),
+            ..Default::default()
+        })
+        .is_err());
+        let practice = start(StartInput {
+            exam_id: Some("2019-gara-1".into()),
+            minutes: Some(25),
+            practice: Some(true),
+            ..Default::default()
+        })
+        .unwrap();
+        assert_eq!(practice["minutes"], 25);
+        assert_eq!(practice["fidelity"], "practice");
     }
 }

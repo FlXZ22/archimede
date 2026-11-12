@@ -2922,3 +2922,64 @@ math {
     font-size: 9px;
   }
 }
+.rule-facts {
+  display: flex;
+  gap: 30px;
+  margin: 22px 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+.rule-facts span {
+  flex: 1;
+}
+.rule-facts strong {
+  display: block;
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.rule-scoring {
+  color: #e8c38a;
+  font-size: 12px !important;
+}
+.rule-summary ul {
+  padding-left: 18px;
+  color: #b8b8c2;
+  font-size: 11px;
+  line-height: 1.9;
+  margin: 18px 0;
+}
+.rule-summary .subtle-link {
+  display: block;
+  line-height: 1.8;
+}
+.scoring-source {
+  margin-top: 8px;
+}
+.rule-summary .method-details p {
+  font-size: 10px;
+  line-height: 1.9;
+}
+.fidelity-label {
+  font-size: 9px !important;
+  color: #c4ad87 !important;
+}
+.setup input[readonly] {
+  color: #e6ca9b;
+  border-color: #6b5533;
+  background: #282219;
+  cursor: default;
+}
+@media (max-width: 480px) {
+  .rule-facts {
+    gap: 15px;
+    font-size: 9px;
+  }
+  .rule-facts strong {
+    font-size: 25px;
+  }
+  .rule-summary ul {
+    font-size: 10px;
+  }
+}
